@@ -1,0 +1,83 @@
+﻿@model DigitalTwinPlatform.Models.LoginViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plataforma Gemelo Digital</title>
+    <meta charset="utf-8" />
+    <!-- Common packages: jQuery, Bootstrap, jsTree -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js" integrity="sha512-8qmis31OQi6hIRgvkht0s6mCOittjMa9GMqtK9hes5iEQBQE/Ca6yGE5FsW36vyipGoWQswBj/QBm2JR086Rkw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-grid.min.css" integrity="sha512-QTQigm89ZvHzwoJ/NgJPghQPegLIwnXuOXWEdAjjOvpE9uaBGeI05+auj0RjYVr86gtMaBJRKi8hWZVsrVe/Ug==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap-reboot.min.css" integrity="sha512-YmRhY1UctqTkuyEizDjgJcnn0Knu5tdpv09KUI003L5tjfn2YGxhujqXEFE7fqFgRlqU/jeTI+K7fFurBnRAhg==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.7/jstree.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.7/themes/default/style.min.css" />
+    <!--Twwen JS: Modulo para creación de transiciones-->
+    <script src="~/public/js/Libreria/tween.umd.js"></script>
+    <!-- Autodesk Forge Viewer files -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" type="text/css">
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
+    <!--Chart JS  packages-->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+    <!--bootstrap icon package-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
+
+    <!-- this project files -->
+    <link href="/css/site.css" rel="stylesheet" asp-append-version="true"/>
+
+
+</head>
+<body>
+    <div id="pnlLogin" class="panel panel-default" style="margin:auto; text-align:center; width:702px;">
+        <div class="panel-heading"><h3>Control de acceso</h3></div>
+        <div class="panel-body" style="display:flex; justify-content:center; align-items:center; flex-direction:column">
+            <form id="frmLogin" method="post" enctype="multipart/form-data" action="/public/login">
+                <div class="form-group">
+                    <flash dismissable="true" />
+                    <label for="Email">Email</label>
+                    <input id="User" name="User" type="text" class="form-control" placeholder="Introduce tu dirección de email" required style="margin:0; width: 226px">
+                    @*@Html.HiddenFor(m => m.LinkId)*@
+                    <label for="Password">Password</label>
+                    <div class="password-input-flex">
+                        <input id="user-password" name="Password" type="password" class="form-control" placeholder="****" required style="margin:0; width: 226px" />
+                        <i class="bi bi-eye" id="togglePassword"></i>
+                    </div>
+                </div>
+                <button id="btnSubmit" type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        let tg = $('#togglePassword');
+        tg.click(function () {
+            tg.hasClass('bi-eye') ? tg.removeClass('bi-eye').addClass('bi-eye-slash') : tg.removeClass('bi-eye-slash').addClass('bi-eye');
+            let password = $('#user-password');
+            password.attr('type') == 'password' ? password.attr('type', 'text') : password.attr('type', 'password');
+        });
+        window.addEventListener("load", () => {
+
+            var errorMessage = "@TempData["ErrorMessage"]";
+            if (errorMessage != null && errorMessage != "") {
+                $('.panel-body').prepend('<div class = "errorMessage">'+errorMessage+'</div>')
+
+            }
+            setTimeout(() => {
+                $('.errorMessage').css('opacity', 0);
+                $('.errorMessage').one("webkitTransitionEnd oTransitionEnd MSTransitionEnd", function () {
+                    $('.errorMessage').remove();
+                });
+
+            }, 4000)
+        });
+    </script>
+</body>
+</html>
+
+
+
